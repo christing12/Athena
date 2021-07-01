@@ -13,11 +13,15 @@ set(CORE_INC
     Timer.h
     CoreIncludes.h
 )
+set(CORE_SRC
+    Timer.cpp
+)
 list(TRANSFORM CORE_INC PREPEND "Core/")
-source_group("Core" FILES ${CORE_INC})
+list(TRANSFORM CORE_SRC PREPEND "Core/")
+source_group("Core" FILES ${CORE_INC} ${CORE_SRC})
 
 set (ALL_SRC_NO_PCH
-
+    ${CORE_SRC}
 )
 
 set(BASE_INC
@@ -39,6 +43,12 @@ set(ALL_SRC_FILES
 
 # --------------- COMPILING PROJECT IN A LIBRARY --------------------- #
 add_library(${LIB_NAME} STATIC ${ALL_HEADER_FILES} ${ALL_SRC_FILES})
+
+
+# set include paths
+target_include_directories(${LIB_NAME}
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 
 # ---------------- SETTING UP PRECOMPILED HEADER FILES + FLAGS FOR COMPILATION ----#
